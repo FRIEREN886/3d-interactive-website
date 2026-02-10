@@ -5,17 +5,30 @@ const mouse = {
     x: 0,
     y: 0,
     normalizedX: 0, // -1 到 1
-    normalizedY: 0  // -1 到 1
+    normalizedY: 0,  // -1 到 1
+    velocityX: 0,
+    velocityY: 0,
+    lastX: 0,
+    lastY: 0,
+    speed: 0
 };
 
 // 更新鼠标位置
 function updateMousePosition(event) {
+    const prevX = mouse.x;
+    const prevY = mouse.y;
+    
     mouse.x = event.clientX;
     mouse.y = event.clientY;
     
     // 归一化坐标 (-1 到 1)
     mouse.normalizedX = (event.clientX / window.innerWidth) * 2 - 1;
     mouse.normalizedY = -(event.clientY / window.innerHeight) * 2 + 1;
+    
+    // 计算鼠标速度
+    mouse.velocityX = mouse.x - prevX;
+    mouse.velocityY = mouse.y - prevY;
+    mouse.speed = Math.sqrt(mouse.velocityX * mouse.velocityX + mouse.velocityY * mouse.velocityY);
 }
 
 // 监听鼠标移动

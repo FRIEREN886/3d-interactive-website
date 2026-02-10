@@ -11,7 +11,7 @@ function init() {
     
     // 创建场景
     scene = new THREE.Scene();
-    scene.fog = new THREE.Fog(0x0a0a0f, 10, 50);
+    // No fog for clean design
     
     // 创建相机
     const aspect = window.innerWidth / window.innerHeight;
@@ -28,7 +28,7 @@ function init() {
     
     renderer.setSize(window.innerWidth, window.innerHeight);
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-    renderer.setClearColor(0x0a0a0f, 1);
+    renderer.setClearAlpha(0); // Transparent background
     renderer.shadowMap.enabled = true;
     renderer.shadowMap.type = THREE.PCFSoftShadowMap;
     
@@ -40,7 +40,7 @@ function init() {
     
     // 创建场景管理器
     sceneManager = new SceneManager();
-    sceneManager.scenes = [0, 1, 2, 3]; // 4个场景
+    sceneManager.scenes = [0]; // Only light bulb scene
     sceneManager.init(scene);
     
     // 设置事件监听
@@ -48,11 +48,6 @@ function init() {
     
     // 隐藏加载动画
     hideLoader();
-    
-    // 显示场景标题
-    setTimeout(() => {
-        document.querySelector('.scene-title').classList.add('visible');
-    }, 500);
     
     // 开始渲染循环
     animate();
@@ -62,46 +57,19 @@ function init() {
 
 // 设置光源
 function setupLights() {
-    // 环境光
-    const ambientLight = new THREE.AmbientLight(0x404040, 0.5);
+    // 柔和的环境光
+    const ambientLight = new THREE.AmbientLight(0xfff5e6, 0.6);
     scene.add(ambientLight);
     lights.push(ambientLight);
     
-    // 主方向光
-    const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
+    // 主方向光 - 温暖色调
+    const directionalLight = new THREE.DirectionalLight(0xfff5e6, 0.5);
     directionalLight.position.set(5, 10, 5);
     directionalLight.castShadow = true;
     directionalLight.shadow.mapSize.width = 2048;
     directionalLight.shadow.mapSize.height = 2048;
     scene.add(directionalLight);
     lights.push(directionalLight);
-    
-    // 彩色点光源1 - 紫色
-    const pointLight1 = new THREE.PointLight(0x8a2be2, 1, 50);
-    pointLight1.position.set(-5, 3, 5);
-    scene.add(pointLight1);
-    lights.push(pointLight1);
-    
-    // 彩色点光源2 - 粉色
-    const pointLight2 = new THREE.PointLight(0xff1493, 1, 50);
-    pointLight2.position.set(5, -3, 5);
-    scene.add(pointLight2);
-    lights.push(pointLight2);
-    
-    // 彩色点光源3 - 青色
-    const pointLight3 = new THREE.PointLight(0x00bfff, 1, 50);
-    pointLight3.position.set(0, 5, -5);
-    scene.add(pointLight3);
-    lights.push(pointLight3);
-    
-    // 聚光灯（动态）
-    const spotLight = new THREE.SpotLight(0xffffff, 0.5);
-    spotLight.position.set(0, 10, 0);
-    spotLight.angle = Math.PI / 6;
-    spotLight.penumbra = 0.3;
-    spotLight.castShadow = true;
-    scene.add(spotLight);
-    lights.push(spotLight);
 }
 
 // 设置事件监听
@@ -110,61 +78,6 @@ function setupEventListeners() {
     
     // 窗口大小调整
     window.addEventListener('resize', onWindowResize, false);
-    
-    // 点击切换场景
-    canvas.addEventListener('click', () => {
-        sceneManager.nextScene(camera);
-    });
-    
-    // 滚轮切换场景
-    let lastScrollTime = 0;
-    const scrollDelay = 1000; // 1秒防抖
-    
-    window.addEventListener('wheel', throttle((event) => {
-        const currentTime = Date.now();
-        
-        if (currentTime - lastScrollTime < scrollDelay) {
-            return;
-        }
-        
-        lastScrollTime = currentTime;
-        
-        if (event.deltaY > 0) {
-            sceneManager.nextScene(camera);
-        } else {
-            sceneManager.previousScene(camera);
-        }
-    }, 100));
-    
-    // 触摸支持（移动端）
-    let touchStartY = 0;
-    let touchEndY = 0;
-    
-    canvas.addEventListener('touchstart', (event) => {
-        touchStartY = event.touches[0].clientY;
-    });
-    
-    canvas.addEventListener('touchend', (event) => {
-        touchEndY = event.changedTouches[0].clientY;
-        const diff = touchStartY - touchEndY;
-        
-        if (Math.abs(diff) > 50) { // 最小滑动距离
-            if (diff > 0) {
-                sceneManager.nextScene(camera);
-            } else {
-                sceneManager.previousScene(camera);
-            }
-        }
-    });
-    
-    // 导航指示器点击
-    const indicators = document.querySelectorAll('.indicator');
-    indicators.forEach((indicator, index) => {
-        indicator.addEventListener('click', (event) => {
-            event.stopPropagation();
-            sceneManager.switchToScene(index, camera);
-        });
-    });
 }
 
 // 窗口大小调整处理
@@ -193,21 +106,7 @@ function hideLoader() {
 
 // 更新动态光源
 function updateLights(time) {
-    // 让点光源轻微移动
-    if (lights[2]) {
-        lights[2].position.x = Math.sin(time * 0.5) * 5;
-        lights[2].position.z = Math.cos(time * 0.5) * 5;
-    }
-    
-    if (lights[3]) {
-        lights[3].position.x = Math.cos(time * 0.7) * 5;
-        lights[3].position.z = Math.sin(time * 0.7) * 5;
-    }
-    
-    if (lights[4]) {
-        lights[4].position.x = Math.sin(time * 0.3) * 3;
-        lights[4].position.y = 5 + Math.cos(time * 0.4) * 2;
-    }
+    // No dynamic light movement for clean design
 }
 
 // 动画循环
