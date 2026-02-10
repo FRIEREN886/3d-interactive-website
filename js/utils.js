@@ -15,8 +15,8 @@ const mouse = {
 
 // 更新鼠标位置
 function updateMousePosition(event) {
-    const prevX = mouse.x;
-    const prevY = mouse.y;
+    mouse.lastX = mouse.x;
+    mouse.lastY = mouse.y;
     
     mouse.x = event.clientX;
     mouse.y = event.clientY;
@@ -26,9 +26,16 @@ function updateMousePosition(event) {
     mouse.normalizedY = -(event.clientY / window.innerHeight) * 2 + 1;
     
     // 计算鼠标速度
-    mouse.velocityX = mouse.x - prevX;
-    mouse.velocityY = mouse.y - prevY;
+    mouse.velocityX = mouse.x - mouse.lastX;
+    mouse.velocityY = mouse.y - mouse.lastY;
     mouse.speed = Math.sqrt(mouse.velocityX * mouse.velocityX + mouse.velocityY * mouse.velocityY);
+}
+
+// 更新鼠标状态（在动画循环中调用）
+function updateMouseState() {
+    // 慢速衰减鼠标速度，让效果更持久
+    mouse.velocityX *= 0.95;
+    mouse.velocityY *= 0.95;
 }
 
 // 监听鼠标移动

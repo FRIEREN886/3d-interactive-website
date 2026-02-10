@@ -7,8 +7,6 @@ class SceneManager {
         this.isTransitioning = false;
         this.sceneObjects = []; // 存储每个场景的物体
         this.lightBulb = null;
-        this.swayVelocity = { x: 0, z: 0 };
-        this.swayAngle = { x: 0, z: 0 };
     }
 
     // 初始化所有场景
@@ -175,9 +173,5 @@ class SceneManager {
         // 应用旋转（从吊点摆动）
         this.lightBulb.rotation.x = userData.swayAngle.z;
         this.lightBulb.rotation.z = userData.swayAngle.x;
-        
-        // 慢速衰减鼠标速度，让效果更持久
-        mouse.velocityX *= 0.95;
-        mouse.velocityY *= 0.95;
     }
 }

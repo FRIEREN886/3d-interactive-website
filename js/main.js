@@ -28,7 +28,6 @@ function init() {
     
     renderer.setSize(window.innerWidth, window.innerHeight);
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-    renderer.setClearAlpha(0); // Transparent background
     renderer.shadowMap.enabled = true;
     renderer.shadowMap.type = THREE.PCFSoftShadowMap;
     
@@ -117,6 +116,9 @@ function animate() {
     
     // 更新性能监控
     Performance.update();
+    
+    // 更新鼠标状态
+    updateMouseState();
     
     // 更新光源
     updateLights(time);
