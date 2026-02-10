@@ -1,9 +1,12 @@
 import * as THREE from 'three';
 import gsap from 'gsap';
 import { ParticleSystem } from '../utils/ParticleSystem.js';
+import { GlowShader } from '../shaders/GlowShader.js';
+import { WebGLUtils } from '../utils/WebGLUtils.js';
 
 /**
  * Scene1 - Welcome scene with particle explosion effect
+ * Enhanced with custom WebGL shaders for glow effects
  */
 export class Scene1 {
     constructor(scene, camera) {
@@ -16,22 +19,43 @@ export class Scene1 {
     }
     
     init() {
-        // Create particle system
+        // Create particle system with WebGL shader effects
         this.particleSystem = new ParticleSystem(this.scene, {
             count: window.innerWidth < 768 ? 500 : 1000,
             size: 2,
         });
         
-        // Create central glowing sphere
+        // Create central glowing sphere with custom WebGL shader
         const sphereGeometry = new THREE.SphereGeometry(0.5, 32, 32);
-        const sphereMaterial = new THREE.MeshBasicMaterial({
+        
+        // Use custom WebGL glow shader
+        const glowUniforms = WebGLUtils.createUniforms({
+            glowColor: new THREE.Color(0x00f5ff),
+            intensity: 1.5,
+            power: 2.5
+        });
+        
+        const glowMaterial = WebGLUtils.createShaderMaterial({
+            vertexShader: GlowShader.vertexShader,
+            fragmentShader: GlowShader.fragmentShader,
+            uniforms: glowUniforms,
+            transparent: true,
+            blending: THREE.AdditiveBlending,
+            side: THREE.BackSide
+        });
+        
+        this.centralSphere = new THREE.Mesh(sphereGeometry, glowMaterial);
+        this.scene.add(this.centralSphere);
+        this.geometries.push(this.centralSphere);
+        
+        // Add inner sphere with standard material
+        const innerMaterial = new THREE.MeshBasicMaterial({
             color: 0x00f5ff,
             transparent: true,
             opacity: 0.6,
         });
-        this.centralSphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
-        this.scene.add(this.centralSphere);
-        this.geometries.push(this.centralSphere);
+        this.innerSphere = new THREE.Mesh(sphereGeometry.clone(), innerMaterial);
+        this.centralSphere.add(this.innerSphere);
         
         // Add point light
         this.pointLight = new THREE.PointLight(0x00f5ff, 2, 10);

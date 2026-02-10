@@ -1,8 +1,12 @@
 import * as THREE from 'three';
 import gsap from 'gsap';
+import { WaveShader } from '../shaders/WaveShader.js';
+import { GlowShader } from '../shaders/GlowShader.js';
+import { WebGLUtils } from '../utils/WebGLUtils.js';
 
 /**
  * Scene3 - Showcase scene with rotating geometry
+ * Enhanced with custom WebGL wave and glow shaders
  */
 export class Scene3 {
     constructor(scene, camera) {
@@ -15,36 +19,57 @@ export class Scene3 {
     }
     
     init() {
-        // Create a complex rotating structure
+        // Create a complex rotating structure with wave shader
         const mainGeometry = new THREE.TorusKnotGeometry(1, 0.3, 100, 16);
-        const mainMaterial = new THREE.MeshStandardMaterial({
-            color: 0xff00ff,
-            metalness: 0.8,
-            roughness: 0.2,
-            emissive: 0xff00ff,
-            emissiveIntensity: 0.2,
-            wireframe: false,
+        
+        // Use custom WebGL wave shader for the main mesh
+        const mainUniforms = WebGLUtils.createUniforms({
+            time: 0,
+            amplitude: 0.05,
+            frequency: 3.0,
+            color1: new THREE.Color(0xff00ff),
+            color2: new THREE.Color(0xff0088)
+        });
+        
+        const mainMaterial = WebGLUtils.createShaderMaterial({
+            vertexShader: WaveShader.vertexShader,
+            fragmentShader: WaveShader.fragmentShader,
+            uniforms: mainUniforms,
+            transparent: false,
+            side: THREE.DoubleSide
         });
         
         this.mainMesh = new THREE.Mesh(mainGeometry, mainMaterial);
         this.scene.add(this.mainMesh);
         this.geometries.push(this.mainMesh);
         
-        // Create orbiting spheres
+        // Create orbiting spheres with glow effect
         const sphereGeometry = new THREE.SphereGeometry(0.2, 32, 32);
-        const colors = [0x00f5ff, 0xff00ff, 0xffea00];
+        const glowColors = [
+            new THREE.Color(0x00f5ff),
+            new THREE.Color(0xff00ff),
+            new THREE.Color(0xffea00)
+        ];
         
         this.orbitingSpheres = [];
         for (let i = 0; i < 3; i++) {
-            const material = new THREE.MeshStandardMaterial({
-                color: colors[i],
-                metalness: 0.5,
-                roughness: 0.3,
-                emissive: colors[i],
-                emissiveIntensity: 0.5,
+            // Create glow material using custom WebGL shader
+            const glowUniforms = WebGLUtils.createUniforms({
+                glowColor: glowColors[i],
+                intensity: 2.0,
+                power: 2.0
             });
             
-            const sphere = new THREE.Mesh(sphereGeometry, material);
+            const glowMaterial = WebGLUtils.createShaderMaterial({
+                vertexShader: GlowShader.vertexShader,
+                fragmentShader: GlowShader.fragmentShader,
+                uniforms: glowUniforms,
+                transparent: true,
+                blending: THREE.AdditiveBlending,
+                side: THREE.FrontSide
+            });
+            
+            const sphere = new THREE.Mesh(sphereGeometry, glowMaterial);
             this.scene.add(sphere);
             this.geometries.push(sphere);
             this.orbitingSpheres.push(sphere);
@@ -113,6 +138,11 @@ export class Scene3 {
         if (this.mainMesh) {
             this.mainMesh.rotation.x = time * 0.3;
             this.mainMesh.rotation.y = time * 0.5;
+            
+            // Update shader uniforms for wave animation
+            if (this.mainMesh.material.uniforms) {
+                WebGLUtils.updateUniforms(this.mainMesh.material, { time });
+            }
         }
         
         // Animate orbiting spheres

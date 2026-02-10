@@ -1,8 +1,11 @@
 import * as THREE from 'three';
 import gsap from 'gsap';
+import { GlowShader } from '../shaders/GlowShader.js';
+import { WebGLUtils } from '../utils/WebGLUtils.js';
 
 /**
  * Scene4 - Interactive scene with mouse-responsive elements
+ * Enhanced with WebGL glow shaders for interactive cubes
  */
 export class Scene4 {
     constructor(scene, camera) {
@@ -16,18 +19,32 @@ export class Scene4 {
     }
     
     init() {
-        // Create a grid of interactive cubes
+        // Create a grid of interactive cubes with glow shaders
         const cubeGeometry = new THREE.BoxGeometry(0.5, 0.5, 0.5);
-        const colors = [0x00f5ff, 0xff00ff, 0xffea00];
+        const glowColors = [
+            new THREE.Color(0x00f5ff),
+            new THREE.Color(0xff00ff),
+            new THREE.Color(0xffea00)
+        ];
         
         for (let x = -2; x <= 2; x++) {
             for (let y = -1; y <= 1; y++) {
-                const material = new THREE.MeshStandardMaterial({
-                    color: colors[Math.floor(Math.random() * colors.length)],
-                    metalness: 0.6,
-                    roughness: 0.4,
-                    emissive: colors[Math.floor(Math.random() * colors.length)],
-                    emissiveIntensity: 0.2,
+                const colorIndex = Math.floor(Math.random() * glowColors.length);
+                
+                // Create glow material using custom WebGL shader
+                const glowUniforms = WebGLUtils.createUniforms({
+                    glowColor: glowColors[colorIndex],
+                    intensity: 1.0,
+                    power: 2.5
+                });
+                
+                const material = WebGLUtils.createShaderMaterial({
+                    vertexShader: GlowShader.vertexShader,
+                    fragmentShader: GlowShader.fragmentShader,
+                    uniforms: glowUniforms,
+                    transparent: true,
+                    blending: THREE.AdditiveBlending,
+                    side: THREE.BackSide
                 });
                 
                 const cube = new THREE.Mesh(cubeGeometry, material);
@@ -35,6 +52,7 @@ export class Scene4 {
                 cube.userData = {
                     originalPosition: cube.position.clone(),
                     originalScale: 1,
+                    originalIntensity: 1.0
                 };
                 
                 this.scene.add(cube);
@@ -120,11 +138,14 @@ export class Scene4 {
                         ease: 'power2.out',
                     });
                     
-                    // Brighten emissive
-                    gsap.to(mesh.material, {
-                        duration: 0.3,
-                        emissiveIntensity: 0.5 + influence * 0.5,
-                    });
+                    // Update shader intensity
+                    const targetIntensity = mesh.userData.originalIntensity + influence * 2.0;
+                    if (mesh.material.uniforms) {
+                        WebGLUtils.updateUniforms(mesh.material, { 
+                            intensity: targetIntensity,
+                            power: 2.0 - influence * 0.5
+                        });
+                    }
                 } else {
                     gsap.to(mesh.scale, {
                         duration: 0.5,
@@ -133,10 +154,13 @@ export class Scene4 {
                         z: 1,
                     });
                     
-                    gsap.to(mesh.material, {
-                        duration: 0.5,
-                        emissiveIntensity: 0.2,
-                    });
+                    // Reset shader intensity
+                    if (mesh.material.uniforms) {
+                        WebGLUtils.updateUniforms(mesh.material, { 
+                            intensity: mesh.userData.originalIntensity,
+                            power: 2.5
+                        });
+                    }
                 }
             });
             

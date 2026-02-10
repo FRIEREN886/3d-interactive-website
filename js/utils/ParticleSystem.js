@@ -1,7 +1,10 @@
 import * as THREE from 'three';
+import { ParticleShader } from '../shaders/ParticleShader.js';
+import { WebGLUtils } from './WebGLUtils.js';
 
 /**
- * ParticleSystem - Creates and manages particle effects
+ * ParticleSystem - Creates and manages particle effects using WebGL shaders
+ * Enhanced with custom GLSL shaders for better visual effects
  */
 export class ParticleSystem {
     constructor(scene, config) {
@@ -53,18 +56,24 @@ export class ParticleSystem {
         }
         
         this.particleGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-        this.particleGeometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+        this.particleGeometry.setAttribute('customColor', new THREE.BufferAttribute(colors, 3));
         this.particleGeometry.setAttribute('size', new THREE.BufferAttribute(sizes, 1));
         
-        // Create material
-        this.particleMaterial = new THREE.PointsMaterial({
-            size: size,
-            vertexColors: true,
-            transparent: true,
-            opacity: 0.8,
-            blending: THREE.AdditiveBlending,
-            depthWrite: false,
+        // Create material using custom WebGL shaders
+        const uniforms = WebGLUtils.createUniforms({
+            time: 0,
+            pointTexture: null
         });
+        
+        this.particleMaterial = WebGLUtils.createShaderMaterial({
+            vertexShader: ParticleShader.vertexShader,
+            fragmentShader: ParticleShader.fragmentShader,
+            uniforms,
+            transparent: true,
+            blending: THREE.AdditiveBlending
+        });
+        
+        this.particleMaterial.depthWrite = false;
         
         // Create particles mesh
         this.particles = new THREE.Points(this.particleGeometry, this.particleMaterial);
@@ -73,6 +82,9 @@ export class ParticleSystem {
     
     update(time) {
         if (!this.particles) return;
+        
+        // Update shader uniforms for animation
+        WebGLUtils.updateUniforms(this.particleMaterial, { time });
         
         // Rotate particles slowly
         this.particles.rotation.y = time * 0.05;
@@ -121,7 +133,8 @@ export class ParticleSystem {
     }
     
     setOpacity(opacity) {
-        if (this.particleMaterial) {
+        if (this.particleMaterial && this.particleMaterial.uniforms) {
+            // For shader material, we control opacity through uniforms
             this.particleMaterial.opacity = opacity;
         }
     }

@@ -1,8 +1,11 @@
 import * as THREE from 'three';
 import gsap from 'gsap';
+import { GlowShader } from '../shaders/GlowShader.js';
+import { WebGLUtils } from '../utils/WebGLUtils.js';
 
 /**
  * Scene5 - Ending scene with contact information
+ * Enhanced with WebGL glow shaders for visual effects
  */
 export class Scene5 {
     constructor(scene, camera) {
@@ -15,9 +18,13 @@ export class Scene5 {
     }
     
     init() {
-        // Create a ring of particles/spheres
+        // Create a ring of particles/spheres with glow shader
         const sphereGeometry = new THREE.SphereGeometry(0.1, 16, 16);
-        const colors = [0x00f5ff, 0xff00ff, 0xffea00];
+        const glowColors = [
+            new THREE.Color(0x00f5ff),
+            new THREE.Color(0xff00ff),
+            new THREE.Color(0xffea00)
+        ];
         
         this.spheres = [];
         const numSpheres = 12;
@@ -25,14 +32,22 @@ export class Scene5 {
         
         for (let i = 0; i < numSpheres; i++) {
             const angle = (i / numSpheres) * Math.PI * 2;
-            const color = colors[i % colors.length];
+            const color = glowColors[i % glowColors.length];
             
-            const material = new THREE.MeshStandardMaterial({
-                color: color,
-                metalness: 0.7,
-                roughness: 0.3,
-                emissive: color,
-                emissiveIntensity: 0.5,
+            // Create glow material using custom WebGL shader
+            const glowUniforms = WebGLUtils.createUniforms({
+                glowColor: color,
+                intensity: 2.0,
+                power: 2.0
+            });
+            
+            const material = WebGLUtils.createShaderMaterial({
+                vertexShader: GlowShader.vertexShader,
+                fragmentShader: GlowShader.fragmentShader,
+                uniforms: glowUniforms,
+                transparent: true,
+                blending: THREE.AdditiveBlending,
+                side: THREE.FrontSide
             });
             
             const sphere = new THREE.Mesh(sphereGeometry, material);
@@ -45,14 +60,22 @@ export class Scene5 {
             this.spheres.push({ mesh: sphere, angle: angle });
         }
         
-        // Create central glowing element
+        // Create central glowing element with glow shader
         const centerGeometry = new THREE.OctahedronGeometry(0.8);
-        const centerMaterial = new THREE.MeshStandardMaterial({
-            color: 0xffffff,
-            metalness: 0.9,
-            roughness: 0.1,
-            emissive: 0xffffff,
-            emissiveIntensity: 0.3,
+        
+        const centerGlowUniforms = WebGLUtils.createUniforms({
+            glowColor: new THREE.Color(0xffffff),
+            intensity: 1.5,
+            power: 3.0
+        });
+        
+        const centerMaterial = WebGLUtils.createShaderMaterial({
+            vertexShader: GlowShader.vertexShader,
+            fragmentShader: GlowShader.fragmentShader,
+            uniforms: centerGlowUniforms,
+            transparent: true,
+            blending: THREE.AdditiveBlending,
+            side: THREE.BackSide
         });
         
         this.centerMesh = new THREE.Mesh(centerGeometry, centerMaterial);

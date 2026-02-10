@@ -2,6 +2,7 @@ import * as THREE from 'three';
 import gsap from 'gsap';
 import { CONFIG } from './config.js';
 import { ScrollManager } from './utils/ScrollManager.js';
+import { WebGLUtils } from './utils/WebGLUtils.js';
 import { Scene1 } from './scenes/Scene1.js';
 import { Scene2 } from './scenes/Scene2.js';
 import { Scene3 } from './scenes/Scene3.js';
@@ -10,6 +11,7 @@ import { Scene5 } from './scenes/Scene5.js';
 
 /**
  * Main Application Class
+ * 3D Interactive Website powered by WebGL rendering
  */
 class App {
     constructor() {
@@ -24,6 +26,13 @@ class App {
     }
     
     init() {
+        // Check WebGL support
+        const webglSupport = WebGLUtils.checkWebGLSupport();
+        if (!webglSupport.supported) {
+            this.showWebGLError();
+            return;
+        }
+        
         this.setupRenderer();
         this.setupCamera();
         this.setupScene();
@@ -32,17 +41,36 @@ class App {
         this.setupScrollManager();
         this.hideLoadingScreen();
         this.animate();
+        
+        // Log WebGL information to console
+        WebGLUtils.logWebGLInfo(this.renderer);
+    }
+    
+    showWebGLError() {
+        const loadingScreen = document.querySelector('#loading-screen');
+        const loaderText = document.querySelector('.loader-text');
+        if (loaderText) {
+            loaderText.textContent = 'WebGL not supported';
+            loaderText.style.color = '#ff0000';
+        }
+        console.error('WebGL is not supported in this browser. Please use a modern browser with WebGL support.');
     }
     
     setupRenderer() {
+        // Create WebGL renderer with optimized settings
         this.renderer = new THREE.WebGLRenderer({
             canvas: this.canvas,
             antialias: true,
             alpha: true,
+            powerPreference: 'high-performance', // Request high-performance GPU
         });
         this.renderer.setSize(window.innerWidth, window.innerHeight);
         this.renderer.setPixelRatio(CONFIG.PIXEL_RATIO);
         this.renderer.setClearColor(0x0a0a0a, 1);
+        
+        // Enable additional WebGL features
+        this.renderer.shadowMap.enabled = true;
+        this.renderer.shadowMap.type = THREE.PCFSoftShadowMap;
     }
     
     setupCamera() {
