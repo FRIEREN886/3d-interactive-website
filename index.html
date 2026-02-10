@@ -1,159 +1,229 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Creative Experience 2026 - An immersive 3D interactive website showcasing modern web technologies">
-    <meta name="keywords" content="3D, interactive, Three.js, creative, web experience">
-    <meta name="author" content="Creative Experience">
-    
-    <!-- Open Graph / Social Media -->
-    <meta property="og:type" content="website">
-    <meta property="og:title" content="Creative Experience 2026">
-    <meta property="og:description" content="An immersive 3D interactive website showcasing modern web technologies">
-    
-    <title>Creative Experience 2026 - 3D Interactive Website</title>
-    <link rel="stylesheet" href="/css/style.css">
+    <meta name="description" content="欢迎来到我们的创意网站">
+    <title>创意网站 - Welcome</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        header {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 1.5rem 2rem;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #667eea;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 2rem;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        nav a:hover {
+            color: #667eea;
+        }
+
+        main {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        .container {
+            max-width: 1200px;
+            width: 100%;
+        }
+
+        .hero {
+            text-align: center;
+            color: white;
+            padding: 3rem 2rem;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            animation: fadeInUp 1s ease;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+            animation: fadeInUp 1s ease 0.3s both;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 1rem 2.5rem;
+            background: white;
+            color: #667eea;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: bold;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            animation: fadeInUp 1s ease 0.6s both;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 4rem;
+            animation: fadeInUp 1s ease 0.9s both;
+        }
+
+        .feature-card {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .feature-card h3 {
+            color: #667eea;
+            margin-bottom: 0.5rem;
+        }
+
+        footer {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 2rem;
+            text-align: center;
+            color: #666;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero p {
+                font-size: 1.1rem;
+            }
+
+            nav ul {
+                gap: 1rem;
+            }
+
+            .features {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
 </head>
 <body>
-    <!-- Loading Screen -->
-    <div id="loading-screen">
-        <div class="loader">
-            <div class="loader-spinner"></div>
-            <div class="loader-text">Loading<span class="dots"></span></div>
-            <div class="loader-progress">
-                <div class="loader-progress-bar"></div>
-            </div>
+    <header>
+        <div class="header-content">
+            <div class="logo">创意网站</div>
+            <nav>
+                <ul>
+                    <li><a href="#home">首页</a></li>
+                    <li><a href="#features">特色</a></li>
+                    <li><a href="#about">关于</a></li>
+                    <li><a href="#contact">联系</a></li>
+                </ul>
+            </nav>
         </div>
-    </div>
+    </header>
 
-    <!-- Navigation -->
-    <nav id="main-nav">
-        <div class="logo">CE 2026</div>
-        <ul class="nav-links">
-            <li><a href="#scene1" data-scene="0">Welcome</a></li>
-            <li><a href="#scene2" data-scene="1">Explore</a></li>
-            <li><a href="#scene3" data-scene="2">Showcase</a></li>
-            <li><a href="#scene4" data-scene="3">Interactive</a></li>
-            <li><a href="#scene5" data-scene="4">Contact</a></li>
-        </ul>
-        <div class="nav-toggle">
-            <span></span>
-            <span></span>
-            <span></span>
+    <main>
+        <div class="container">
+            <section class="hero">
+                <h1>欢迎来到创意世界</h1>
+                <p>探索无限可能，创造美好未来</p>
+                <a href="#features" class="btn">开始探索</a>
+
+                <div class="features" id="features">
+                    <div class="feature-card">
+                        <div class="feature-icon">🚀</div>
+                        <h3>快速响应</h3>
+                        <p>简洁高效的设计，为您提供流畅的用户体验</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🎨</div>
+                        <h3>现代设计</h3>
+                        <p>采用最新的设计趋势，打造视觉美感</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">💡</div>
+                        <h3>创新思维</h3>
+                        <p>不断创新，带来全新的交互体验</p>
+                    </div>
+                </div>
+            </section>
         </div>
-    </nav>
+    </main>
 
-    <!-- Scroll Progress Indicator -->
-    <div id="scroll-progress">
-        <div class="scroll-progress-bar"></div>
-    </div>
-
-    <!-- Scene Counter -->
-    <div id="scene-counter">
-        <span class="current-scene">01</span>
-        <span class="separator">/</span>
-        <span class="total-scenes">05</span>
-    </div>
-
-    <!-- Canvas Container -->
-    <canvas id="webgl-canvas"></canvas>
-
-    <!-- Content Sections -->
-    <div id="content-sections">
-        <!-- Scene 1: Welcome -->
-        <section class="content-section" data-scene="0">
-            <div class="content-wrapper">
-                <h1 class="scene-title" data-text="Welcome to the Future">Welcome to the Future</h1>
-                <p class="scene-description">Experience the next generation of web design</p>
-                <button class="scene-button">Explore More</button>
-            </div>
-        </section>
-
-        <!-- Scene 2: Explore Possibilities -->
-        <section class="content-section" data-scene="1">
-            <div class="content-wrapper">
-                <h1 class="scene-title" data-text="Explore Possibilities">Explore Possibilities</h1>
-                <p class="scene-description">Discover the power of 3D interactive experiences</p>
-                <div class="feature-list">
-                    <div class="feature-item">
-                        <h3>Immersive</h3>
-                        <p>Engaging 3D environments</p>
-                    </div>
-                    <div class="feature-item">
-                        <h3>Dynamic</h3>
-                        <p>Smooth animations</p>
-                    </div>
-                    <div class="feature-item">
-                        <h3>Interactive</h3>
-                        <p>Responsive to your actions</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Scene 3: Showcase -->
-        <section class="content-section" data-scene="2">
-            <div class="content-wrapper">
-                <h1 class="scene-title" data-text="Interactive Design">Interactive Design</h1>
-                <p class="scene-description">Where creativity meets technology</p>
-                <div class="showcase-items">
-                    <div class="showcase-item">Performance Optimized</div>
-                    <div class="showcase-item">Modern Aesthetics</div>
-                    <div class="showcase-item">Responsive Layout</div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Scene 4: Interactive Scene -->
-        <section class="content-section" data-scene="3">
-            <div class="content-wrapper">
-                <h1 class="scene-title" data-text="Move Your Mouse">Move Your Mouse</h1>
-                <p class="scene-description">Experience real-time interactions</p>
-                <div class="interactive-hint">
-                    <p>← Move your cursor to interact with the 3D objects →</p>
-                </div>
-            </div>
-        </section>
-
-        <!-- Scene 5: Contact -->
-        <section class="content-section" data-scene="4">
-            <div class="content-wrapper">
-                <h1 class="scene-title" data-text="Get in Touch">Get in Touch</h1>
-                <p class="scene-description">Let's create something amazing together</p>
-                <div class="social-links">
-                    <a href="#" class="social-link" aria-label="GitHub">
-                        <svg viewBox="0 0 24 24" width="24" height="24">
-                            <path fill="currentColor" d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
-                        </svg>
-                    </a>
-                    <a href="#" class="social-link" aria-label="Twitter">
-                        <svg viewBox="0 0 24 24" width="24" height="24">
-                            <path fill="currentColor" d="M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z"/>
-                        </svg>
-                    </a>
-                    <a href="#" class="social-link" aria-label="LinkedIn">
-                        <svg viewBox="0 0 24 24" width="24" height="24">
-                            <path fill="currentColor" d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"/>
-                            <circle fill="currentColor" cx="4" cy="4" r="2"/>
-                        </svg>
-                    </a>
-                </div>
-                <p class="copyright">© 2026 Creative Experience. Powered by Three.js & GSAP</p>
-            </div>
-        </section>
-    </div>
-
-    <!-- Music Control (Optional) -->
-    <button id="music-control" aria-label="Toggle music">
-        <svg class="icon-play" viewBox="0 0 24 24" width="20" height="20">
-            <path fill="currentColor" d="M8 5v14l11-7z"/>
-        </svg>
-        <svg class="icon-pause" viewBox="0 0 24 24" width="20" height="20" style="display: none;">
-            <path fill="currentColor" d="M6 4h4v16H6V4zm8 0h4v16h-4V4z"/>
-        </svg>
-    </button>
-
-    <script type="module" src="/js/main.js"></script>
+    <footer>
+        <p>&copy; 2026 创意网站. 保留所有权利.</p>
+    </footer>
 </body>
 </html>
