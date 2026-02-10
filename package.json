@@ -1,18 +1,22 @@
 {
-  "name": "creative-website",
-  "version": "2.0.0",
-  "description": "一个简洁现代的响应式网站 - A simple, modern responsive website",
+  "name": "3d-interactive-website",
+  "version": "1.0.0",
+  "description": "高端3D交互式网站 - 基于Three.js和GSAP的WebGL体验 | High-end 3D Interactive Website with Three.js and GSAP",
   "type": "module",
   "scripts": {
     "dev": "npx http-server -p 8000",
     "start": "npx http-server -p 8000"
   },
   "keywords": [
-    "html",
-    "css",
-    "responsive",
-    "creative",
+    "threejs",
+    "webgl",
+    "3d",
+    "interactive",
+    "gsap",
+    "animation",
+    "particles",
     "modern",
+    "creative",
     "website"
   ],
   "author": "",
