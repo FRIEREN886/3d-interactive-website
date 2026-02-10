@@ -326,7 +326,6 @@ class SceneManager {
     nextScene(camera) {
         if (this.isTransitioning) return;
         
-        this.isTransitioning = true;
         const nextIndex = (this.currentSceneIndex + 1) % this.scenes.length;
         this.switchToScene(nextIndex, camera);
     }
@@ -335,7 +334,6 @@ class SceneManager {
     previousScene(camera) {
         if (this.isTransitioning) return;
         
-        this.isTransitioning = true;
         const prevIndex = (this.currentSceneIndex - 1 + this.scenes.length) % this.scenes.length;
         this.switchToScene(prevIndex, camera);
     }

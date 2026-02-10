@@ -106,6 +106,8 @@ function setupLights() {
 
 // 设置事件监听
 function setupEventListeners() {
+    const canvas = document.getElementById('webgl-canvas');
+    
     // 窗口大小调整
     window.addEventListener('resize', onWindowResize, false);
     
