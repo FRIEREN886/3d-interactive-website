@@ -1,27 +1,31 @@
 # 3D Interactive Website - Creative Experience 2026
 
-A stunning 3D interactive creative website built with Three.js and GSAP, inspired by modern web experiences like MakeMePulse 2017. Features immersive 3D scenes, smooth scroll animations, particle systems, and responsive mouse interactions.
+A stunning 3D interactive creative website built with **WebGL**, Three.js and GSAP, featuring custom GLSL shaders for advanced visual effects. This project showcases modern web technologies with immersive 3D scenes, smooth scroll animations, particle systems, and responsive mouse interactions powered by WebGL rendering.
 
-![Creative Experience 2026](https://img.shields.io/badge/Three.js-r160-blue) ![GSAP](https://img.shields.io/badge/GSAP-v3.12-green) ![Vite](https://img.shields.io/badge/Vite-v5.0-purple)
+![Creative Experience 2026](https://img.shields.io/badge/Three.js-r160-blue) ![GSAP](https://img.shields.io/badge/GSAP-v3.12-green) ![Vite](https://img.shields.io/badge/Vite-v5.0-purple) ![WebGL](https://img.shields.io/badge/WebGL-Powered-red)
 
 ## ✨ Features
 
-### 🎨 Visual Effects
-- **Particle Systems** - Dynamic star fields and floating particles with color gradients
-- **3D Geometry** - Interactive geometric shapes including torus knots, octahedrons, and spheres
+### 🎨 WebGL-Powered Visual Effects
+- **Custom GLSL Shaders** - Hand-crafted vertex and fragment shaders for advanced effects
+- **Particle Systems** - GPU-accelerated particle rendering with custom WebGL shaders
+- **3D Geometry** - Interactive geometric shapes with holographic and wave shader effects
+- **Glow Effects** - Real-time WebGL glow shaders with adjustable intensity
+- **Holographic Materials** - Futuristic holographic effects with scanlines and glitch
+- **Wave Animations** - Vertex displacement shaders for dynamic surface waves
 - **Smooth Animations** - GSAP-powered transitions with easing functions
 - **Neon Aesthetics** - Modern dark theme with vibrant neon accents (cyan, magenta, yellow)
 - **Mouse Parallax** - Real-time camera movement based on mouse position
-- **Lighting Effects** - Ambient, directional, point, and spot lights for depth
+- **Advanced Lighting** - Ambient, directional, point, and spot lights with WebGL shadow mapping
 
 ### 🎭 Scene System
-The website features 5 distinct immersive scenes:
+The website features 5 distinct immersive scenes, each enhanced with custom WebGL shaders:
 
-1. **Welcome Scene** - Particle explosion effect with glowing central sphere
-2. **Explore Possibilities** - Floating geometric shapes (torus, octahedron, icosahedron)
-3. **Interactive Design** - Rotating torus knot with orbiting spheres
-4. **Move Your Mouse** - Grid of interactive cubes that respond to cursor proximity
-5. **Get in Touch** - Circular arrangement of spheres with central rotating element
+1. **Welcome Scene** - Particle explosion effect with custom shader-based glowing central sphere
+2. **Explore Possibilities** - Floating geometric shapes with holographic WebGL shaders
+3. **Interactive Design** - Rotating torus knot with wave displacement shader and glowing orbiting spheres
+4. **Move Your Mouse** - Grid of interactive cubes with real-time WebGL glow intensity
+5. **Get in Touch** - Circular arrangement of spheres with custom shader effects
 
 ### 📱 User Experience
 - **Scroll-Based Navigation** - Smooth scene transitions triggered by scrolling
@@ -76,17 +80,23 @@ npm run preview
 ├── css/
 │   └── style.css          # Complete styling with modern CSS
 ├── js/
-│   ├── main.js            # Application entry point
+│   ├── main.js            # Application entry point with WebGL setup
 │   ├── config.js          # Configuration constants
+│   ├── shaders/           # Custom GLSL WebGL shaders
+│   │   ├── GlowShader.js         # Glow effect shader
+│   │   ├── WaveShader.js         # Wave animation shader
+│   │   ├── HolographicShader.js  # Holographic effect shader
+│   │   └── ParticleShader.js     # Particle rendering shader
 │   ├── scenes/            # Individual scene modules
-│   │   ├── Scene1.js      # Welcome scene
-│   │   ├── Scene2.js      # Explore scene
-│   │   ├── Scene3.js      # Showcase scene
-│   │   ├── Scene4.js      # Interactive scene
-│   │   └── Scene5.js      # Contact scene
+│   │   ├── Scene1.js      # Welcome scene with shader effects
+│   │   ├── Scene2.js      # Explore scene with holographic shaders
+│   │   ├── Scene3.js      # Showcase scene with wave shader
+│   │   ├── Scene4.js      # Interactive scene with glow shaders
+│   │   └── Scene5.js      # Contact scene with shader effects
 │   └── utils/             # Utility modules
-│       ├── ScrollManager.js    # Scroll handling
-│       └── ParticleSystem.js   # Particle effects
+│       ├── ScrollManager.js      # Scroll handling
+│       ├── ParticleSystem.js     # GPU particle effects
+│       └── WebGLUtils.js         # WebGL helper utilities
 ├── assets/                # Assets directory
 │   ├── textures/          # Texture files (optional)
 │   └── fonts/             # Custom fonts (optional)
@@ -96,15 +106,74 @@ npm run preview
 ## 🛠️ Technology Stack
 
 ### Core Technologies
+- **[WebGL](https://www.khronos.org/webgl/)** - Hardware-accelerated 3D graphics rendering
 - **[Three.js](https://threejs.org/) v0.160.0** - WebGL 3D rendering engine
+- **[GLSL](https://www.khronos.org/opengl/wiki/OpenGL_Shading_Language)** - OpenGL Shading Language for custom shaders
 - **[GSAP](https://greensock.com/gsap/) v3.12.5** - Professional-grade animation library
 - **Vanilla JavaScript (ES6+)** - Modern JavaScript with modules
-- **HTML5** - Semantic markup
+- **HTML5** - Semantic markup with canvas element
 - **CSS3** - Modern styling with custom properties
 
 ### Development Tools
 - **[Vite](https://vitejs.dev/) v5.0.11** - Fast build tool and dev server
 - **ES Modules** - Native JavaScript module system
+
+## 🎨 WebGL & Shader Implementation
+
+### Custom GLSL Shaders
+This project features four custom WebGL shaders written in GLSL:
+
+#### 1. GlowShader
+Creates realistic glow effects using Fresnel calculations:
+- **Vertex Shader**: Calculates normal vectors and view-dependent positioning
+- **Fragment Shader**: Implements Fresnel glow with adjustable intensity and power
+- **Use Cases**: Glowing spheres, interactive cubes, central objects
+
+#### 2. WaveShader
+Implements vertex displacement for wave animations:
+- **Vertex Shader**: Displaces vertices using sine/cosine functions for wave effect
+- **Fragment Shader**: Color mixing with animated gradients
+- **Use Cases**: Torus knot animation, dynamic surface effects
+
+#### 3. HolographicShader
+Creates futuristic holographic effects:
+- **Features**: Fresnel effect, animated scanlines, glitch effect, color gradients
+- **Fragment Shader**: Combines multiple effects for holographic appearance
+- **Use Cases**: Geometric shapes in Scene 2
+
+#### 4. ParticleShader
+GPU-accelerated particle rendering:
+- **Vertex Shader**: Custom size attributes with distance attenuation
+- **Fragment Shader**: Circular particles with glow and pulsating effects
+- **Use Cases**: Particle system throughout all scenes
+
+### WebGL Utilities
+The `WebGLUtils.js` module provides:
+- WebGL capability detection (WebGL 1.0/2.0 support)
+- Renderer capability inspection
+- Shader material creation helpers
+- Uniform management utilities
+- Performance logging
+
+Example usage:
+```javascript
+import { WebGLUtils } from './utils/WebGLUtils.js';
+import { GlowShader } from './shaders/GlowShader.js';
+
+// Create custom shader material
+const uniforms = WebGLUtils.createUniforms({
+    glowColor: new THREE.Color(0x00f5ff),
+    intensity: 1.5,
+    power: 2.5
+});
+
+const material = WebGLUtils.createShaderMaterial({
+    vertexShader: GlowShader.vertexShader,
+    fragmentShader: GlowShader.fragmentShader,
+    uniforms,
+    transparent: true
+});
+```
 
 ## 🎮 Usage & Customization
 
@@ -165,13 +234,15 @@ Mobile optimizations include:
 
 ### Implemented Optimizations
 - ✅ Adaptive pixel ratio (max 2x)
-- ✅ Efficient particle systems
+- ✅ GPU-accelerated particle systems with custom shaders
+- ✅ Efficient WebGL shader compilation and caching
 - ✅ Geometry instancing where applicable
 - ✅ Proper dispose methods for scene cleanup
 - ✅ RequestAnimationFrame for smooth 60 FPS
 - ✅ Device-specific particle counts
 - ✅ CSS transitions using GPU acceleration
 - ✅ Debounced resize handlers
+- ✅ WebGL shadow mapping optimization
 
 ### Performance Tips
 - Target 60 FPS maintained across all scenes
@@ -179,20 +250,29 @@ Mobile optimizations include:
 - Reduce particle count on lower-end devices
 - Use simpler geometries for mobile
 - Enable hardware acceleration in browser
+- Check WebGL support using the built-in detection
 
 ## 🌐 Browser Compatibility
 
 Tested and supported on:
-- ✅ Chrome 90+
+- ✅ Chrome 90+ (Recommended for best WebGL performance)
 - ✅ Firefox 88+
-- ✅ Safari 14+
+- ✅ Safari 14+ (WebGL 2.0 supported on macOS Big Sur+)
 - ✅ Edge 90+
 
 ### Required Browser Features
-- WebGL 1.0/2.0
+- **WebGL 1.0 or 2.0** (automatically detected)
+- GLSL shader support
 - ES6+ JavaScript support
 - CSS Grid and Flexbox
 - RequestAnimationFrame API
+- Canvas element support
+
+### WebGL Detection
+The application automatically detects WebGL support on load:
+- If WebGL is not supported, an error message is displayed
+- WebGL capabilities are logged to the browser console
+- Automatic fallback handling for unsupported browsers
 
 ## 🎨 Design Features
 
@@ -217,21 +297,47 @@ Tested and supported on:
 ### Common Issues
 
 **Black screen on load:**
-- Check browser console for errors
-- Ensure WebGL is enabled in browser
-- Try different browser or update graphics drivers
+- Check browser console for WebGL errors
+- Ensure WebGL is enabled in browser settings
+- Try a different browser or update graphics drivers
+- Verify your GPU supports WebGL (visit [get.webgl.org](https://get.webgl.org/))
+- Check if hardware acceleration is enabled in browser settings
+
+**WebGL not supported error:**
+- Update your browser to the latest version
+- Enable WebGL in browser settings:
+  - Chrome: `chrome://flags` → Enable WebGL
+  - Firefox: `about:config` → `webgl.disabled` = false
+  - Safari: Preferences → Advanced → Show Develop menu → Develop → Enable WebGL
+- Update graphics drivers
+- Try a different browser with better WebGL support
 
 **Poor performance:**
 - Reduce particle count in `config.js`
 - Lower `PIXEL_RATIO` in config
 - Close other browser tabs
 - Check GPU acceleration is enabled
+- Disable browser extensions that may interfere
+- Check WebGL capabilities in browser console
+
+**Shader compilation errors:**
+- Check browser console for GLSL errors
+- Verify WebGL 1.0/2.0 support
+- Some older GPUs may not support all shader features
+- Try updating graphics drivers
 
 **Scroll not working:**
 - Ensure JavaScript is enabled
 - Check for console errors
 - Try refreshing the page
 - Verify viewport height is set correctly
+
+### Debugging WebGL
+Open browser console to see:
+- WebGL version and capabilities
+- Shader compilation status
+- Performance metrics
+- GPU information
 
 ## 📄 License
 
@@ -240,9 +346,11 @@ MIT License - feel free to use this project for learning or as a template for yo
 ## 🙏 Credits & Inspiration
 
 - Inspired by [MakeMePulse](https://2017.makemepulse.com/) 2017 website
-- Built with [Three.js](https://threejs.org/)
+- Built with [Three.js](https://threejs.org/) WebGL library
+- Custom GLSL shaders for WebGL rendering
 - Animated with [GSAP](https://greensock.com/)
 - Icons from open source SVG collections
+- WebGL by [Khronos Group](https://www.khronos.org/webgl/)
 
 ## 🤝 Contributing
 
@@ -258,4 +366,4 @@ For questions or feedback, please open an issue on GitHub.
 
 ---
 
-**Built with ❤️ using Three.js and GSAP** | © 2026 Creative Experience
+**Built with ❤️ using WebGL, Three.js and GSAP** | Powered by Custom GLSL Shaders | © 2026 Creative Experience
