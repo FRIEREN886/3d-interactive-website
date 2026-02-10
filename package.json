@@ -1,0 +1,27 @@
+{
+  "name": "3d-interactive-website",
+  "version": "1.0.0",
+  "description": "A creative 3D interactive website with Three.js and GSAP",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "keywords": [
+    "threejs",
+    "3d",
+    "interactive",
+    "gsap",
+    "creative"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "three": "^0.160.0",
+    "gsap": "^3.12.5"
+  },
+  "devDependencies": {
+    "vite": "^5.0.11"
+  }
+}
