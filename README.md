@@ -1,261 +1,129 @@
-# 3D Interactive Website - Creative Experience 2026
+# 创意网站 - Creative Website
 
-A stunning 3D interactive creative website built with Three.js and GSAP, inspired by modern web experiences like MakeMePulse 2017. Features immersive 3D scenes, smooth scroll animations, particle systems, and responsive mouse interactions.
+一个简洁、现代的响应式网站，采用优雅的渐变背景和流畅的动画效果。
 
-![Creative Experience 2026](https://img.shields.io/badge/Three.js-r160-blue) ![GSAP](https://img.shields.io/badge/GSAP-v3.12-green) ![Vite](https://img.shields.io/badge/Vite-v5.0-purple)
+## ✨ 特色功能
 
-## ✨ Features
+### 🎨 视觉设计
+- **渐变背景** - 优雅的紫色渐变背景
+- **流畅动画** - 使用CSS动画实现的淡入效果
+- **响应式设计** - 完美适配各种设备屏幕
+- **现代UI** - 简洁大方的用户界面
+- **交互反馈** - 悬停效果和过渡动画
 
-### 🎨 Visual Effects
-- **Particle Systems** - Dynamic star fields and floating particles with color gradients
-- **3D Geometry** - Interactive geometric shapes including torus knots, octahedrons, and spheres
-- **Smooth Animations** - GSAP-powered transitions with easing functions
-- **Neon Aesthetics** - Modern dark theme with vibrant neon accents (cyan, magenta, yellow)
-- **Mouse Parallax** - Real-time camera movement based on mouse position
-- **Lighting Effects** - Ambient, directional, point, and spot lights for depth
+### 📱 功能特点
+- **导航栏** - 固定顶部导航，方便访问各个部分
+- **特色卡片** - 三个功能特色展示卡片
+- **响应式布局** - 移动端、平板、桌面端完美展示
+- **中文界面** - 完整的中文用户界面
 
-### 🎭 Scene System
-The website features 5 distinct immersive scenes:
+## 🚀 快速开始
 
-1. **Welcome Scene** - Particle explosion effect with glowing central sphere
-2. **Explore Possibilities** - Floating geometric shapes (torus, octahedron, icosahedron)
-3. **Interactive Design** - Rotating torus knot with orbiting spheres
-4. **Move Your Mouse** - Grid of interactive cubes that respond to cursor proximity
-5. **Get in Touch** - Circular arrangement of spheres with central rotating element
+### 直接使用
 
-### 📱 User Experience
-- **Scroll-Based Navigation** - Smooth scene transitions triggered by scrolling
-- **Progress Indicators** - Visual scroll progress bar and scene counter
-- **Responsive Design** - Optimized for desktop, tablet, and mobile devices
-- **Loading Animation** - Elegant loading screen with progress indicator
-- **Navigation Menu** - Fixed navigation with active state indicators
-- **Touch Support** - Full mobile and tablet touch interaction support
+直接在浏览器中打开 `index.html` 文件即可查看网站。无需安装任何依赖。
 
-## 🚀 Getting Started
+### 使用开发服务器（可选）
 
-### Prerequisites
-- Node.js (v16 or higher)
-- npm or yarn package manager
+如果你想使用本地开发服务器：
 
-### Installation
-
-1. **Clone the repository**
+1. **克隆仓库**
 ```bash
 git clone https://github.com/FRIEREN886/3d-interactive-website.git
 cd 3d-interactive-website
 ```
 
-2. **Install dependencies**
+2. **启动简单的HTTP服务器**
 ```bash
-npm install
+# 使用 Python 3
+python -m http.server 8000
+
+# 或使用 Node.js (如果已安装 http-server)
+npx http-server -p 8000
 ```
 
-3. **Run development server**
-```bash
-npm run dev
-```
+3. **在浏览器中访问**
+打开浏览器访问 `http://localhost:8000`
 
-The website will be available at `http://localhost:5173` (default Vite port)
-
-4. **Build for production**
-```bash
-npm run build
-```
-
-5. **Preview production build**
-```bash
-npm run preview
-```
-
-## 📁 Project Structure
+## 📁 项目结构
 
 ```
 3d-interactive-website/
-├── index.html              # Main HTML file with semantic structure
-├── package.json            # Dependencies and scripts
-├── css/
-│   └── style.css          # Complete styling with modern CSS
-├── js/
-│   ├── main.js            # Application entry point
-│   ├── config.js          # Configuration constants
-│   ├── scenes/            # Individual scene modules
-│   │   ├── Scene1.js      # Welcome scene
-│   │   ├── Scene2.js      # Explore scene
-│   │   ├── Scene3.js      # Showcase scene
-│   │   ├── Scene4.js      # Interactive scene
-│   │   └── Scene5.js      # Contact scene
-│   └── utils/             # Utility modules
-│       ├── ScrollManager.js    # Scroll handling
-│       └── ParticleSystem.js   # Particle effects
-├── assets/                # Assets directory
-│   ├── textures/          # Texture files (optional)
-│   └── fonts/             # Custom fonts (optional)
-└── README.md              # This file
+├── index.html              # 主HTML文件（包含所有样式和内容）
+├── package.json            # 项目配置文件
+├── .gitignore             # Git忽略文件
+└── README.md              # 项目说明文档
 ```
 
-## 🛠️ Technology Stack
+## 🛠️ 技术栈
 
-### Core Technologies
-- **[Three.js](https://threejs.org/) v0.160.0** - WebGL 3D rendering engine
-- **[GSAP](https://greensock.com/gsap/) v3.12.5** - Professional-grade animation library
-- **Vanilla JavaScript (ES6+)** - Modern JavaScript with modules
-- **HTML5** - Semantic markup
-- **CSS3** - Modern styling with custom properties
+### 核心技术
+- **HTML5** - 现代化的HTML结构
+- **CSS3** - 渐变、动画、Flexbox/Grid布局
+- **JavaScript (可选)** - 未来可添加交互功能
 
-### Development Tools
-- **[Vite](https://vitejs.dev/) v5.0.11** - Fast build tool and dev server
-- **ES Modules** - Native JavaScript module system
+### 特性
+- 无需构建工具
+- 无需依赖安装
+- 纯HTML/CSS实现
+- 快速加载
+- 易于定制
 
-## 🎮 Usage & Customization
+## 🎮 自定义
 
-### Configuration
-Edit `js/config.js` to customize:
-- Number of particles
-- Animation durations
-- Colors and themes
-- Camera settings
-- Mouse interaction sensitivity
+### 修改样式
+在 `index.html` 文件的 `<style>` 标签中，你可以自定义：
+- 背景渐变颜色
+- 字体和文字样式
+- 动画效果和时长
+- 卡片样式和布局
+- 响应式断点
 
-Example:
-```javascript
-export const CONFIG = {
-    PARTICLES: {
-        count: 1000,      // Adjust particle count
-        size: 2,          // Particle size
-    },
-    COLORS: {
-        neonCyan: 0x00f5ff,
-        neonMagenta: 0xff00ff,
-        neonYellow: 0xffea00,
-    },
-    // ... more settings
-};
-```
+### 修改内容
+直接编辑 HTML 内容来更新：
+- 标题和描述文字
+- 导航菜单项
+- 特色功能卡片
+- 页脚信息
 
-### Adding New Scenes
-1. Create a new scene file in `js/scenes/` (e.g., `Scene6.js`)
-2. Implement required methods: `init()`, `enter()`, `exit()`, `update()`, `dispose()`
-3. Import and add to scene array in `js/main.js`
-4. Add corresponding HTML section in `index.html`
-5. Update `CONFIG.TOTAL_SCENES` in `js/config.js`
+## 📱 响应式设计
 
-### Styling
-Modify `css/style.css` to customize:
-- Color scheme (CSS custom properties in `:root`)
-- Typography and fonts
-- Layout and spacing
-- Responsive breakpoints
-- Animation timings
+网站完全响应式，适配：
+- **桌面端** (1024px+) - 完整的三列布局
+- **平板端** (768px - 1023px) - 自适应布局
+- **移动端** (320px - 767px) - 单列布局
 
-## 📱 Responsive Design
+## ⚡ 性能特点
 
-The website is fully responsive with optimized experiences for:
-- **Desktop** (1920x1080 and above) - Full particle count and effects
-- **Tablet** (768px - 1024px) - Optimized geometry complexity
-- **Mobile** (320px - 767px) - Reduced particle count, touch interactions
+- 轻量级设计，加载快速
+- 纯CSS动画，GPU加速
+- 无外部依赖
+- 优化的移动端体验
 
-Mobile optimizations include:
-- Reduced particle count for performance (500 vs 1000)
-- Simplified geometries
-- Touch event support
-- Responsive navigation menu
-- Adjusted text sizes and spacing
+## 🌐 浏览器兼容性
 
-## ⚡ Performance Optimization
+支持所有现代浏览器：
+- ✅ Chrome 60+
+- ✅ Firefox 60+
+- ✅ Safari 12+
+- ✅ Edge 79+
 
-### Implemented Optimizations
-- ✅ Adaptive pixel ratio (max 2x)
-- ✅ Efficient particle systems
-- ✅ Geometry instancing where applicable
-- ✅ Proper dispose methods for scene cleanup
-- ✅ RequestAnimationFrame for smooth 60 FPS
-- ✅ Device-specific particle counts
-- ✅ CSS transitions using GPU acceleration
-- ✅ Debounced resize handlers
+## 📄 许可证
 
-### Performance Tips
-- Target 60 FPS maintained across all scenes
-- Monitor performance using browser DevTools
-- Reduce particle count on lower-end devices
-- Use simpler geometries for mobile
-- Enable hardware acceleration in browser
+MIT License - 可自由使用本项目进行学习或作为自己项目的模板。
 
-## 🌐 Browser Compatibility
+## 🤝 贡献
 
-Tested and supported on:
-- ✅ Chrome 90+
-- ✅ Firefox 88+
-- ✅ Safari 14+
-- ✅ Edge 90+
+欢迎贡献！你可以：
+- 报告bug
+- 建议新功能
+- 提交pull request
+- 改进文档
 
-### Required Browser Features
-- WebGL 1.0/2.0
-- ES6+ JavaScript support
-- CSS Grid and Flexbox
-- RequestAnimationFrame API
+## 📧 联系方式
 
-## 🎨 Design Features
-
-### Color Scheme
-- **Background**: Deep blacks (#0a0a0a, #1a1a2e)
-- **Accents**: Neon cyan (#00f5ff), magenta (#ff00ff), yellow (#ffea00)
-- **Text**: White (#ffffff) and muted gray (#a0a0a0)
-
-### Typography
-- Primary: Montserrat (modern, geometric sans-serif)
-- Secondary: Poppins (clean, friendly sans-serif)
-- Fallback: System fonts for performance
-
-### Animation Philosophy
-- Smooth easing functions (ease-out, ease-in-out)
-- Scene transitions: 1-1.5 seconds
-- Micro-interactions: 0.3-0.5 seconds
-- Consistent animation rhythm throughout
-
-## 🔧 Troubleshooting
-
-### Common Issues
-
-**Black screen on load:**
-- Check browser console for errors
-- Ensure WebGL is enabled in browser
-- Try different browser or update graphics drivers
-
-**Poor performance:**
-- Reduce particle count in `config.js`
-- Lower `PIXEL_RATIO` in config
-- Close other browser tabs
-- Check GPU acceleration is enabled
-
-**Scroll not working:**
-- Ensure JavaScript is enabled
-- Check for console errors
-- Try refreshing the page
-- Verify viewport height is set correctly
-
-## 📄 License
-
-MIT License - feel free to use this project for learning or as a template for your own creative projects.
-
-## 🙏 Credits & Inspiration
-
-- Inspired by [MakeMePulse](https://2017.makemepulse.com/) 2017 website
-- Built with [Three.js](https://threejs.org/)
-- Animated with [GSAP](https://greensock.com/)
-- Icons from open source SVG collections
-
-## 🤝 Contributing
-
-Contributions are welcome! Feel free to:
-- Report bugs
-- Suggest new features
-- Submit pull requests
-- Improve documentation
-
-## 📧 Contact
-
-For questions or feedback, please open an issue on GitHub.
+如有问题或反馈，请在GitHub上提交issue。
 
 ---
 
-**Built with ❤️ using Three.js and GSAP** | © 2026 Creative Experience
+**用 ❤️ 构建** | © 2026 创意网站
