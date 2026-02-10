@@ -21,8 +21,8 @@ export const CONFIG = {
     
     // Particle Settings
     PARTICLES: {
-        count: window.innerWidth < 768 ? 500 : 1000,
-        size: 2,
+        count: window.innerWidth < 768 ? 200 : 400,
+        size: 1.2,
         speed: 0.0005,
     },
     
