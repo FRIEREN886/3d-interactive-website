@@ -49,7 +49,7 @@ export class ParticleSystem {
             }
             
             // Size variation
-            sizes[i] = Math.random() * size;
+            sizes[i] = Math.random() * size * 0.8;
         }
         
         this.particleGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
@@ -61,7 +61,7 @@ export class ParticleSystem {
             size: size,
             vertexColors: true,
             transparent: true,
-            opacity: 0.8,
+            opacity: 0.4,
             blending: THREE.AdditiveBlending,
             depthWrite: false,
         });

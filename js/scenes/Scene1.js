@@ -18,8 +18,8 @@ export class Scene1 {
     init() {
         // Create particle system
         this.particleSystem = new ParticleSystem(this.scene, {
-            count: window.innerWidth < 768 ? 500 : 1000,
-            size: 2,
+            count: window.innerWidth < 768 ? 200 : 400,
+            size: 1.2,
         });
         
         // Create central glowing sphere
@@ -44,7 +44,7 @@ export class Scene1 {
         if (this.particleSystem) {
             gsap.to(this.particleSystem.particleMaterial, {
                 duration: 1,
-                opacity: 0.8,
+                opacity: 0.4,
             });
         }
         
