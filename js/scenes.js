@@ -119,9 +119,9 @@ class SceneManager {
         lightBulbGroup.userData = {
             swayAngle: { x: 0, z: 0 },
             swayVelocity: { x: 0, z: 0 },
-            damping: 0.95,
-            stiffness: 0.02,
-            maxSwayAngle: 0.3
+            damping: 0.98,
+            stiffness: 0.01,
+            maxSwayAngle: 0.5
         };
         
         scene.add(lightBulbGroup);
@@ -148,9 +148,9 @@ class SceneManager {
         
         const userData = this.lightBulb.userData;
         
-        // 根据鼠标速度计算外力
-        const forceX = mouse.velocityX * 0.0002;
-        const forceZ = mouse.velocityY * 0.0002;
+        // 根据鼠标速度计算外力（增加力的强度）
+        const forceX = mouse.velocityX * 0.001;
+        const forceZ = mouse.velocityY * 0.001;
         
         // 应用外力到速度
         userData.swayVelocity.x += forceX;
@@ -176,8 +176,8 @@ class SceneManager {
         this.lightBulb.rotation.x = userData.swayAngle.z;
         this.lightBulb.rotation.z = userData.swayAngle.x;
         
-        // 衰减鼠标速度
-        mouse.velocityX *= 0.9;
-        mouse.velocityY *= 0.9;
+        // 慢速衰减鼠标速度，让效果更持久
+        mouse.velocityX *= 0.95;
+        mouse.velocityY *= 0.95;
     }
 }
