@@ -133,8 +133,9 @@ export class ParticleSystem {
     }
     
     setOpacity(opacity) {
-        if (this.particleMaterial && this.particleMaterial.uniforms) {
-            // For shader material, we control opacity through uniforms
+        // Opacity for shader materials is controlled via the material property
+        // since we're using additive blending
+        if (this.particleMaterial) {
             this.particleMaterial.opacity = opacity;
         }
     }

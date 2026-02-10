@@ -48,13 +48,13 @@ export class Scene1 {
         this.scene.add(this.centralSphere);
         this.geometries.push(this.centralSphere);
         
-        // Add inner sphere with standard material
+        // Add inner sphere with standard material (reuse geometry for efficiency)
         const innerMaterial = new THREE.MeshBasicMaterial({
             color: 0x00f5ff,
             transparent: true,
             opacity: 0.6,
         });
-        this.innerSphere = new THREE.Mesh(sphereGeometry.clone(), innerMaterial);
+        this.innerSphere = new THREE.Mesh(sphereGeometry, innerMaterial);
         this.centralSphere.add(this.innerSphere);
         
         // Add point light
