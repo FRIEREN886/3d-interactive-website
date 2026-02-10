@@ -1,8 +1,11 @@
 import * as THREE from 'three';
 import gsap from 'gsap';
+import { HolographicShader } from '../shaders/HolographicShader.js';
+import { WebGLUtils } from '../utils/WebGLUtils.js';
 
 /**
  * Scene2 - Introduction scene with 3D geometric shapes
+ * Enhanced with holographic WebGL shader effects
  */
 export class Scene2 {
     constructor(scene, camera) {
@@ -15,20 +18,45 @@ export class Scene2 {
     }
     
     init() {
-        // Create geometric shapes floating
+        // Create geometric shapes with holographic WebGL shader effects
         const shapes = [
-            { geometry: new THREE.TorusGeometry(0.7, 0.2, 16, 100), position: [-2, 1, -2], color: 0x00f5ff },
-            { geometry: new THREE.OctahedronGeometry(0.8), position: [2, -1, -3], color: 0xff00ff },
-            { geometry: new THREE.IcosahedronGeometry(0.6), position: [0, 1.5, -2], color: 0xffea00 },
+            { 
+                geometry: new THREE.TorusGeometry(0.7, 0.2, 16, 100), 
+                position: [-2, 1, -2], 
+                color1: new THREE.Color(0x00f5ff),
+                color2: new THREE.Color(0x0088ff)
+            },
+            { 
+                geometry: new THREE.OctahedronGeometry(0.8), 
+                position: [2, -1, -3], 
+                color1: new THREE.Color(0xff00ff),
+                color2: new THREE.Color(0xff0088)
+            },
+            { 
+                geometry: new THREE.IcosahedronGeometry(0.6), 
+                position: [0, 1.5, -2], 
+                color1: new THREE.Color(0xffea00),
+                color2: new THREE.Color(0xff8800)
+            },
         ];
         
-        shapes.forEach(({ geometry, position, color }) => {
-            const material = new THREE.MeshStandardMaterial({
-                color: color,
-                metalness: 0.7,
-                roughness: 0.2,
-                emissive: color,
-                emissiveIntensity: 0.3,
+        shapes.forEach(({ geometry, position, color1, color2 }) => {
+            // Create holographic material using custom WebGL shader
+            const uniforms = WebGLUtils.createUniforms({
+                color1,
+                color2,
+                time: 0,
+                scanlineIntensity: 0.1,
+                glitchIntensity: 0.05
+            });
+            
+            const material = WebGLUtils.createShaderMaterial({
+                vertexShader: HolographicShader.vertexShader,
+                fragmentShader: HolographicShader.fragmentShader,
+                uniforms,
+                transparent: true,
+                blending: THREE.AdditiveBlending,
+                side: THREE.DoubleSide
             });
             
             const mesh = new THREE.Mesh(geometry, material);
@@ -87,6 +115,11 @@ export class Scene2 {
             
             // Float effect
             mesh.position.y += Math.sin(time * 2 + index) * 0.001;
+            
+            // Update shader uniforms for animation
+            if (mesh.material.uniforms) {
+                WebGLUtils.updateUniforms(mesh.material, { time });
+            }
         });
         
         // Mouse parallax effect
